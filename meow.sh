@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="0.1"
+VERSION="0.2"
 
 
 
@@ -12,7 +12,7 @@ error() {
 
 usage() {
 	cat >&2 <<EOF
-Usage: $0 [options...] <method> <URL>
+Usage: $0 [options...] [<method>] <URL>
 Type $0 --help for more information
 EOF
 
@@ -24,7 +24,10 @@ help() {
 meow v$VERSION by arelive <me@are.moe>
 An easy tool for making requests using cURL and following redirects
 
-Usage: $0 [options...] <method> <URL>
+Usage:
+  $0 [options...] <method> <URL>
+  $0 [options...] <URI>
+
 When the request can have a body (methods POST, PUT, DELETE, PATCH), then it is read from stdin.
 When a successful response has a body, then it is written to stdout.
 If the response cannot has a body (methods HEAD, PUT, TRACE), then its headers is written to stdout.
@@ -32,7 +35,7 @@ If cURL returns a non-zero exit code, its output is written to stderr without ch
 Methods can be specified in any case (post, POST, POsT, etc).
 
 Allowed methods:
-  get
+  get (defalut)
   head
   post
   put
@@ -149,10 +152,17 @@ do
 	esac
 done
 
-[ ${#posargs[@]} -ne 2 ] && usage
-
-method=${posargs[0]}
-url=${posargs[1]}
+if [ ${#posargs[@]} -eq 2 ]
+then
+	method=${posargs[0]}
+	url=${posargs[1]}
+elif [ ${#posargs[@]} -eq 1 ]
+then
+	method=GET
+	url=${posargs[0]}
+else
+	usage
+fi
 
 
 

@@ -1,7 +1,10 @@
-meow v$0.1 by arelive <me@are.moe>
+meow v$0.2 by arelive <me@are.moe>
 An easy tool for making requests using cURL and following redirects
 
-Usage: meow [options...] <method> <URL>
+Usage:
+  meow [options...] <method> <URL>
+  meow [options...] <URL>
+
 When the request can have a body (methods POST, PUT, DELETE, PATCH), then it is read from stdin.
 When a successful response has a body, then it is written to stdout.
 If the response cannot has a body (methods HEAD, PUT, TRACE), then its headers is written to stdout.
@@ -9,7 +12,7 @@ If cURL returns a non-zero exit code, its output is written to stderr without ch
 Methods can be specified in any case (post, POST, POsT, etc).
 
 Allowed methods:
-  get
+  get (defalut)
   head
   post
   put
@@ -39,7 +42,7 @@ $ BASE=https://sode.su
 $ meow get $BASE/@arelive/profile > test
 $ cat test && echo  # echo for newline
 {"id":287228005,"username":"arelive","searchable":true,"friendable":"public","invitable":"protected","name":"Arelive","type":"user","cover":null,"avatar":"1313402292021605115.png","links":[]}
-$ meow get $BASE/@0/profile && echo  # with redirect
+$ meow $BASE/@0/profile && echo  # with redirect
 {"id":0,"username":"anon","searchable":false,"friendable":"private","invitable":"private","name":"","type":"user","cover":null,"avatar":null,"links":[]}
 $ meow post $BASE/api/me <<<'' && echo  # unusable without auth
 {"status":2}
