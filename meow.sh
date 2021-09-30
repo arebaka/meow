@@ -21,7 +21,7 @@ EOF
 
 help() {
 	cat <<EOF
-meow v$VERSION by arelive <me@are.moe>
+meow v$VERSION
 An easy tool for making requests using cURL and following redirects
 
 Usage:

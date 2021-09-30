@@ -1,43 +1,46 @@
-meow v0.2
-An easy tool for making requests using cURL and following redirects
+# meow v0.2
+*meow!*
 
-Usage:
-  meow [options...] <method> <URL>
-  meow [options...] <URL>
+> An easy tool for making requests using cURL and following redirects
 
-When the request can have a body (methods POST, PUT, DELETE, PATCH), then it is read from stdin.
-When a successful response has a body, then it is written to stdout.
-If the response cannot has a body (methods HEAD, PUT, TRACE), then its headers is written to stdout.
-If cURL returns a non-zero exit code, its output is written to stderr without changes.
+## Usage
+`meow [options...] <method> <URL>`
+or
+`meow [options...] <URL>`
+
+When the request can have a body (methods POST, PUT, DELETE, PATCH), then it is read from stdin.  
+When a successful response has a body, then it is written to stdout.  
+If the response cannot has a body (methods HEAD, PUT, TRACE), then its headers is written to stdout.  
+If cURL returns a non-zero exit code, its output is written to stderr without changes.  
 Methods can be specified in any case (post, POST, POsT, etc).
 
-Allowed methods:
-  get (defalut)
-  head
-  post
-  put
-  delete
-  connect
-  options
-  trace
-  patch
+## Allowed methods
+- get (defalut)
+- head
+- post
+- put
+- delete
+- connect
+- options
+- trace
+- patch
 
-Options:
-  -a, --useragent   "<useragent>"    - set a user-agent for the request
-  -c, --cookie      "<cookie>"       - set a cookie for the request
-  -C, --save-cookie <filename>       - save a cookie from the response to the file
-  -h, --header      "<key>: <value>" - set a optional header for the request
-  -H, --get-headers                  - get response headers instead of body
-  -p, --proxy       <proxy>          - use the proxy
-  -r, --referrer    <referrer>       - set an address making the request
-  -t, --type        <type>           - set a type of the sending content
-  -v, --version                      - show a version of the tool
+## Options
+- `-a, --useragent   "<useragent>"`    – set a user-agent for the request
+- `-c, --cookie      "<cookie>"`       – set a cookie for the request
+- `-C, --save-cookie <filename>`       – save a cookie from the response to the file
+- `-h, --header      "<key>: <value>"` – set a optional header for the request
+- `-H, --get-headers`                  – get response headers instead of body
+- `-p, --proxy       <proxy>`          – use the proxy
+- `-r, --referrer    <referrer>`       – set an address making the request
+- `-t, --type        <type>`           – set a type of the sending content
+- `-v, --version`                      – show a version of the tool
 
-Install:
-  Just copy the meow.sh file to /usr/bin/meow
+## Install
+Just copy the `meow.sh` file to `/usr/bin/meow`
 
-Example:
-
+## Example
+```bash
 $ BASE=https://sode.su
 $ meow get $BASE/@arelive/profile > test
 $ cat test && echo  # echo for newline
@@ -70,3 +73,4 @@ x-xss-protection: 0
 cache-control: public, max-age: 0
 etag: W/"cb5-iFGpwk3mDfL0gTfn+GMUM6pwYDg"
 vary: Accept-Encoding
+```
