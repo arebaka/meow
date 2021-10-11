@@ -27,7 +27,7 @@ Methods can be specified in any case (post, POST, POsT, etc).
 
 ## Options
 - `-a, --useragent   "<useragent>"`    – set a user-agent for the request
-- `-c, --cookie      "<cookie>"`       – set a cookie for the request
+- `-c, --cookie      "<cookie>"`       – set a cookie for the request (can be a filename)
 - `-C, --save-cookie <filename>`       – save a cookie from the response to the file
 - `-h, --header      "<key>: <value>"` – set a optional header for the request
 - `-H, --get-headers`                  – get response headers instead of body

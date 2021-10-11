@@ -81,9 +81,9 @@ request() {
 			curl -sSL -X $method \
 				-A "$useragent" \
 				-H "Cached-Control: no-cache" \
-				-H "Cookie: $cookie" \
 				-H "Content-Type: $type" \
-				$([ -n "$save_cookie" ] && cat<<<"-b $save_cookie") \
+				$([ -n "$cookie" ] && cat<<<"-b $cookie") \
+				$([ -n "$save_cookie" ] && cat<<<"-c $save_cookie") \
 				$([ -n "$proxy" ] && cat<<<"-x $proxy") \
 				$([ -n "$referrer" ] && cat<<<"-e $referrer") \
 				$([ -n "$get_headers" ] && cat<<<"-I") \
@@ -94,8 +94,8 @@ request() {
 			curl -sSL -X $method \
 				-A "$useragent" \
 				-H "Cached-Control: no-cache" \
-				-H "Cookie: $cookie" \
-				$([ -n "$save_cookie" ] && cat<<<"-b $save_cookie") \
+				$([ -n "$cookie" ] && cat<<<"-b $cookie") \
+				$([ -n "$save_cookie" ] && cat<<<"-c $save_cookie") \
 				$([ -n "$proxy" ] && cat<<<"-x $proxy") \
 				$([ -n "$referrer" ] && cat<<<"-e $referrer") \
 				$([ -n "$get_headers" ] && cat<<<"-I") \
