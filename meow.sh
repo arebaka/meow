@@ -68,13 +68,62 @@ request() {
 	local save_cookie=$5
 	local proxy=$6
 	local referrer=$7
-	local type=${8:-"application/octet-stream"}
+	local type=$8
 	local get_headers=$9
 	local headers=""
 
 	for h in ${10}
 	do headers="$headers -H $h"
 	done
+
+	types=[]
+
+	types[cmd]='text/cmd'
+	types[css]='text/css'
+	types[csv]='text/csv'
+	types[html]='text/html'
+	types[javascript]='text/javascript';
+	types[text]='text/plain'
+	types[php]='text/php'
+	types[markdown]='text/markdown'
+	types[cache-manifest]='text/cache-manifest'
+	types[atom]='application/atom+xml'
+	types[EDI-X12]='application/EDI-X12'
+	types[EDIFACT]='application/EDIFACT'
+	types[json]='application/json'
+	types[javascript]='application/javascript'
+	types[octet-stream]='application/octet-stream'
+	types[pdf]='application/pdf'
+	types[postscript]='application/postscript'
+	types[soap]='application/soap+xml'
+	types[woff]='application/font-woff'
+	types[xhmls]='application/xhtml+xml'
+	types[dtd]='application/xml-dtd'
+	types[xop]='application/xop+xml'
+	types[zip]='application/zip'
+	types[gzip]='application/gzip'
+	types[bittorrent]='application/x-bittorrent'
+	types[tex]='application/x-tex'
+	types[xml]='application/xml'
+	types[acc]='audio/acc'
+	types[mp3]='audio/mpeg'
+	types[vorbis]='audio/vorbis'
+	types[gif]='image/gif'
+	types[jpeg]='image/jpeg'
+	types[pjpeg]='image/pjpeg'
+	types[png]='image/png'
+	types[svg]='image/svg+xml'
+	types[tiff]='image/tiff'
+	types[webp]='image/webp'
+	types[iges]='model/iges'
+	types[mesh]='model/mesh'
+	types[vrml]='model/vrml'
+	types[form-data]='multipart/form-data'
+	types[mp4]='video/mp4'
+	types[quicktime]='video/quicktime'
+	types[webm]='video/webm'
+
+	[ -z $types ] && types='application/octet/stream'
 
 	case $method in
 		POST|PUT|DELETE|PATCH)

@@ -33,7 +33,7 @@ Methods can be specified in any case (post, POST, POsT, etc).
 - `-H, --get-headers`                  – get response headers instead of body
 - `-p, --proxy       <proxy>`          – use the proxy
 - `-r, --referrer    <referrer>`       – set an address making the request
-- `-t, --type        <type>`           – set a type of the sending content
+- `-t, --type        <type>`           – set a MIME-type of the sending content
 - `-v, --version`                      – show a version of the tool
 
 ## Install
