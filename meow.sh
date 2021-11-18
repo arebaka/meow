@@ -1,13 +1,99 @@
 #!/bin/bash
 
-VERSION="0.2"
+VERSION='0.3'
+
+
+
+
+declare -A shortcut_types
+
+shortcut_types[cmd]='text/cmd'
+shortcut_types[css]='text/css'
+shortcut_types[csv]='text/csv'
+shortcut_types[html]='text/html'
+shortcut_types[javascript]='text/javascript'
+shortcut_types[text]='text/plain'
+shortcut_types[php]='text/php'
+shortcut_types[markdown]='text/markdown'
+shortcut_types[cache-manifest]='text/cache-manifest'
+shortcut_types[atom]='application/atom+xml'
+shortcut_types[EDI-X12]='application/EDI-X12'
+shortcut_types[EDIFACT]='application/EDIFACT'
+shortcut_types[json]='application/json'
+shortcut_types[octet-stream]='application/octet-stream'
+shortcut_types[pdf]='application/pdf'
+shortcut_types[postscript]='application/postscript'
+shortcut_types[ps]='application/postscript'
+shortcut_types[soap]='application/soap+xml'
+shortcut_types[woff]='application/font-woff'
+shortcut_types[xhtml]='application/xhtml+xml'
+shortcut_types[dtd]='application/xml-dtd'
+shortcut_types[xop]='application/xop+xml'
+shortcut_types[bittorrent]='application/x-bittorrent'
+shortcut_types[tex]='application/x-tex'
+shortcut_types[xml]='application/xml'
+shortcut_types[acc]='audio/acc'
+shortcut_types[mp3]='audio/mpeg'
+shortcut_types[vorbis]='audio/vorbis'
+shortcut_types[gif]='image/gif'
+shortcut_types[jpeg]='image/jpeg'
+shortcut_types[pjpeg]='image/pjpeg'
+shortcut_types[png]='image/png'
+shortcut_types[svg]='image/svg+xml'
+shortcut_types[tiff]='image/tiff'
+shortcut_types[webp]='image/webp'
+shortcut_types[iges]='model/iges'
+shortcut_types[mesh]='model/mesh'
+shortcut_types[vrml]='model/vrml'
+shortcut_types[form-data]='multipart/form-data'
+shortcut_types[quicktime]='video/quicktime'
+shortcut_types[webm]='video/webm'
+
+shortcut_types[.css]='text/css'
+shortcut_types[.csv]='text/csv'
+shortcut_types[.html]='text/html'
+shortcut_types[.htm]='text/html'
+shortcut_types[.js]='text/javascript'
+shortcut_types[.text]='text/plain'
+shortcut_types[.txt]='text/plain'
+shortcut_types[.php]='text/php'
+shortcut_types[.md]='text/markdown'
+shortcut_types[.json]='application/json'
+shortcut_types[.pdf]='application/pdf'
+shortcut_types[.ps]='application/postscript'
+shortcut_types[.woff]='application/font-woff'
+shortcut_types[.xhtml]='application/xhtml+xml'
+shortcut_types[.dtd]='application/xml-dtd'
+shortcut_types[.zip]='application/zip'
+shortcut_types[.gzip]='application/gzip'
+shortcut_types[.tex]='application/x-tex'
+shortcut_types[.xml]='application/xml'
+shortcut_types[.acc]='audio/acc'
+shortcut_types[.mp3]='audio/mpeg'
+shortcut_types[.ogg]='audio/vorbis'
+shortcut_types[.gif]='image/gif'
+shortcut_types[.jpeg]='image/jpeg'
+shortcut_types[.jpg]='image/jpeg'
+shortcut_types[.pjpeg]='image/pjpeg'
+shortcut_types[.pjpg]='image/pjpeg'
+shortcut_types[.png]='image/png'
+shortcut_types[.svg]='image/svg+xml'
+shortcut_types[.tiff]='image/tiff'
+shortcut_types[.tif]='image/tiff'
+shortcut_types[.webp]='image/webp'
+shortcut_types[.iges]='model/iges'
+shortcut_types[.igs]='model/iges'
+shortcut_types[.mesh]='model/mesh'
+shortcut_types[.mp4]='video/mp4'
+shortcut_types[.qtff]='video/quicktime'
+shortcut_types[.webm]='video/webm'
 
 
 
 
 error() {
-	echo $1 >&2
-	exit $2
+	echo $2 >&2
+	exit $1
 }
 
 usage() {
@@ -63,67 +149,27 @@ EOF
 request() {
 	local method=$1
 	local url=$2
-	local useragent=${3:-"meow v$VERSION by arelive (https://are.moe)"}
+	local useragent=${3:-"meow v$VERSION"}
 	local cookie=$4
 	local save_cookie=$5
 	local proxy=$6
 	local referrer=$7
 	local type=$8
 	local get_headers=$9
-	local headers=""
+	local headers=''
 
 	for h in ${10}
-	do headers="$headers -H $h"
+	do headers="$headers -H \"$h\""
 	done
 
-	types=[]
+	[ -n "${shortcut_types[$type]}" ] && type="${shortcut_types[$type]}"
+	[ -z "$type" ] && type='application/octet-stream'
 
-	types[cmd]='text/cmd'
-	types[css]='text/css'
-	types[csv]='text/csv'
-	types[html]='text/html'
-	types[javascript]='text/javascript';
-	types[text]='text/plain'
-	types[php]='text/php'
-	types[markdown]='text/markdown'
-	types[cache-manifest]='text/cache-manifest'
-	types[atom]='application/atom+xml'
-	types[EDI-X12]='application/EDI-X12'
-	types[EDIFACT]='application/EDIFACT'
-	types[json]='application/json'
-	types[javascript]='application/javascript'
-	types[octet-stream]='application/octet-stream'
-	types[pdf]='application/pdf'
-	types[postscript]='application/postscript'
-	types[soap]='application/soap+xml'
-	types[woff]='application/font-woff'
-	types[xhmls]='application/xhtml+xml'
-	types[dtd]='application/xml-dtd'
-	types[xop]='application/xop+xml'
-	types[zip]='application/zip'
-	types[gzip]='application/gzip'
-	types[bittorrent]='application/x-bittorrent'
-	types[tex]='application/x-tex'
-	types[xml]='application/xml'
-	types[acc]='audio/acc'
-	types[mp3]='audio/mpeg'
-	types[vorbis]='audio/vorbis'
-	types[gif]='image/gif'
-	types[jpeg]='image/jpeg'
-	types[pjpeg]='image/pjpeg'
-	types[png]='image/png'
-	types[svg]='image/svg+xml'
-	types[tiff]='image/tiff'
-	types[webp]='image/webp'
-	types[iges]='model/iges'
-	types[mesh]='model/mesh'
-	types[vrml]='model/vrml'
-	types[form-data]='multipart/form-data'
-	types[mp4]='video/mp4'
-	types[quicktime]='video/quicktime'
-	types[webm]='video/webm'
-
-	[ -z $types ] && types='application/octet/stream'
+	[ -n "$cookie" ]      && cookie="-b \"$cookie\""
+	[ -n "$save_cookie" ] && save_cookie="-c \"$save_cookie\""
+	[ -n "$proxy" ]       && proxy="-x \"$proxy\""
+	[ -n "$referrer" ]    && referrer="-e \"$referrer\""
+	[ -n "$get_headers" ] && get_headers="-I"
 
 	case $method in
 		POST|PUT|DELETE|PATCH)
@@ -131,28 +177,17 @@ request() {
 				-A "$useragent" \
 				-H "Cached-Control: no-cache" \
 				-H "Content-Type: $type" \
-				$([ -n "$cookie" ] && cat<<<"-b $cookie") \
-				$([ -n "$save_cookie" ] && cat<<<"-c $save_cookie") \
-				$([ -n "$proxy" ] && cat<<<"-x $proxy") \
-				$([ -n "$referrer" ] && cat<<<"-e $referrer") \
-				$([ -n "$get_headers" ] && cat<<<"-I") \
-				$headers \
+				$cookie $save_cookie $proxy $referrer $get_headers $headers \
 				--data-binary @- "$url"
 		;;
 		GET|HEAD|CONNECT|OPTIONS|TRACE)
 			curl -sSL -X $method \
 				-A "$useragent" \
-				-H "Cached-Control: no-cache" \
-				$([ -n "$cookie" ] && cat<<<"-b $cookie") \
-				$([ -n "$save_cookie" ] && cat<<<"-c $save_cookie") \
-				$([ -n "$proxy" ] && cat<<<"-x $proxy") \
-				$([ -n "$referrer" ] && cat<<<"-e $referrer") \
-				$([ -n "$get_headers" ] && cat<<<"-I") \
-				$headers \
+				$cookie $save_cookie $proxy $referrer $get_headers $headers \
 				"$url"
 		;;
 		*)
-			error "The method $method not allowed!" 1
+			error 1 "The method $method not allowed!"
 		;;
 	esac
 
@@ -168,7 +203,7 @@ headers=()
 while [ $# -gt 0 ]
 do
 	case $1 in
-		--help)
+		'-?'|--help)
 			help
 		;;
 		-v|--version)
@@ -176,7 +211,7 @@ do
 			exit 0
 		;;
 		-a|--useragent|-c|--cookie|-C|--save-cookie|-h|--header|-p|--proxy|-r|--referrer|-t|--type)
-			[ $# -lt 2 ] && error "The option -$1 requires a parameter!" 1
+			[ $# -lt 2 ] && error 1 "The option -$1 requires a parameter!"
 
 			case $1 in
 				-a|--useragent)    useragent=$2   ;;
