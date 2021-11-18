@@ -1,7 +1,10 @@
 # meow
 *meow!*
-
 > An easy tool for making requests using cURL and following redirects
+
+![](https://img.shields.io/tokei/lines/github/arebaka/meow)
+![](https://img.shields.io/github/repo-size/arebaka/meow)
+![](https://img.shields.io/codefactor/grade/github/arebaka/meow)
 
 ## Usage
 `meow [options...] <method> <URL>`
