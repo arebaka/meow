@@ -136,7 +136,7 @@ Options:
   -c, --cookie      "<cookie>"       - set a cookie for the request
   -C, --save-cookie <filename>       - save a cookie from the response to the file
   -h, --header      "<key>: <value>" - set a optional header for the request
-  -H, --get-headers                  - get response headers instead of body
+  -H, --head                         - get response head instead of body
   -p, --proxy       <proxy>          - use the proxy
   -r, --referrer    <referrer>       - set an address making the request
   -t, --type        <type>           - set a type of the sending content
@@ -155,21 +155,22 @@ request() {
 	local proxy=$6
 	local referrer=$7
 	local type=$8
-	local get_headers=$9
-	local headers=''
-
-	for h in ${10}
-	do headers="$headers -H \"$h\""
-	done
+	local get_head=$9
+	local headers=()
+	local options=()
 
 	[ -n "${shortcut_types[$type]}" ] && type="${shortcut_types[$type]}"
 	[ -z "$type" ] && type='application/octet-stream'
 
-	[ -n "$cookie" ]      && cookie="-b \"$cookie\""
-	[ -n "$save_cookie" ] && save_cookie="-c \"$save_cookie\""
-	[ -n "$proxy" ]       && proxy="-x \"$proxy\""
-	[ -n "$referrer" ]    && referrer="-e \"$referrer\""
-	[ -n "$get_headers" ] && get_headers="-I"
+	[ -n "$cookie" ]      && options+=(--cookie "$cookie")
+	[ -n "$save_cookie" ] && options+=(--cookie-jar "$save_cookie")
+	[ -n "$proxy" ]       && options+=(--proxy "$proxy")
+	[ -n "$referrer" ]    && options+=(--referer "$referrer")
+	[ -n "$get_head" ]    && options+=(--head)
+
+	for h in "${10}"
+	do headers+=(--header "$h")
+	done
 
 	case $method in
 		POST|PUT|DELETE|PATCH)
@@ -177,13 +178,15 @@ request() {
 				-A "$useragent" \
 				-H "Cached-Control: no-cache" \
 				-H "Content-Type: $type" \
-				$cookie $save_cookie $proxy $referrer $get_headers $headers \
+				"${options[@]}" \
+				"${headers[@]}" \
 				--data-binary @- "$url"
 		;;
 		GET|HEAD|CONNECT|OPTIONS|TRACE)
 			curl -sSL -X $method \
 				-A "$useragent" \
-				$cookie $save_cookie $proxy $referrer $get_headers $headers \
+				"${options[@]}" \
+				"${headers[@]}" \
 				"$url"
 		;;
 		*)
@@ -225,8 +228,8 @@ do
 
 			shift; shift
 		;;
-		-H|--get-headers)
-			get_headers=1
+		-H|--head)
+			get_head=1
 			shift
 		;;
 		*)
@@ -251,4 +254,4 @@ fi
 
 
 
-request ${method^^} "$url" "$useragent" "$cookie" "$save_cookie" "$proxy" "$referrer" "$type" "$get_headers" "${headers[*]}"
+request ${method^^} "$url" "$useragent" "$cookie" "$save_cookie" "$proxy" "$referrer" "$type" "$get_head" "${headers[*]}"

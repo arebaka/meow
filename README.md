@@ -33,7 +33,7 @@ Methods can be specified in any case (post, POST, POsT, etc).
 - `-c, --cookie      "<cookie>"`       – set a cookie for the request (can be a filename)
 - `-C, --save-cookie <filename>`       – save a cookie from the response to the file
 - `-h, --header      "<key>: <value>"` – set a optional header for the request
-- `-H, --get-headers`                  – get response headers instead of body
+- `-H, --head`                         – get response head instead of body
 - `-p, --proxy       <proxy>`          – use the proxy
 - `-r, --referrer    <referrer>`       – set an address making the request
 - `-t, --type        <type>`           – set a MIME-type of the sending content
