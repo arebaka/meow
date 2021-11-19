@@ -168,7 +168,8 @@ request() {
 	[ -n "$referrer" ]    && options+=(--referer "$referrer")
 	[ -n "$get_head" ]    && options+=(--head)
 
-	for h in "${10}"
+	shift 9
+	for h in "$@"
 	do headers+=(--header "$h")
 	done
 
@@ -217,13 +218,13 @@ do
 			[ $# -lt 2 ] && error 1 "The option -$1 requires a parameter!"
 
 			case $1 in
-				-a|--useragent)    useragent=$2   ;;
-				-c|--cookie)       cookie=$2      ;;
-				-C|--save-cookie)  save_cookie=$2 ;;
-				-h|--header)       headers+=($2)  ;;
-				-p|--proxy)        proxy=$2       ;;
-				-r|--referrer)     referrer=$2    ;;
-				-t|--type)         type=$2        ;;
+				-a|--useragent)    useragent=$2    ;;
+				-c|--cookie)       cookie=$2       ;;
+				-C|--save-cookie)  save_cookie=$2  ;;
+				-h|--header)       headers+=("$2") ;;
+				-p|--proxy)        proxy=$2        ;;
+				-r|--referrer)     referrer=$2     ;;
+				-t|--type)         type=$2         ;;
 			esac
 
 			shift; shift
@@ -254,4 +255,4 @@ fi
 
 
 
-request ${method^^} "$url" "$useragent" "$cookie" "$save_cookie" "$proxy" "$referrer" "$type" "$get_head" "${headers[*]}"
+request ${method^^} "$url" "$useragent" "$cookie" "$save_cookie" "$proxy" "$referrer" "$type" "$get_head" "${headers[@]}"
