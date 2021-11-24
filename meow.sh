@@ -49,6 +49,7 @@ shortcut_types[form-data]='multipart/form-data'
 shortcut_types[quicktime]='video/quicktime'
 shortcut_types[webm]='video/webm'
 
+shortcut_types[.cmd]='text/cmd'
 shortcut_types[.css]='text/css'
 shortcut_types[.csv]='text/csv'
 shortcut_types[.html]='text/html'

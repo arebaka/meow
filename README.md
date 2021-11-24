@@ -7,8 +7,8 @@
 ![](https://img.shields.io/codefactor/grade/github/arebaka/meow)
 
 ## Usage
-`meow [options...] <method> <URL>`
-or
+`meow [options...] <method> <URL>`  
+or  
 `meow [options...] <URL>`
 
 When the request can have a body (methods POST, PUT, DELETE, PATCH), then it is read from stdin.  
