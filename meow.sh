@@ -160,7 +160,7 @@ request() {
 	local headers=()
 	local options=()
 
-	[ -n "${shortcut_types[$type]}" ] && type="${shortcut_types[$type]}"
+	[ -n "$type" ] && [ -n "${shortcut_types[$type]}" ] && type="${shortcut_types[$type]}"
 	[ -z "$type" ] && type='application/octet-stream'
 
 	[ -n "$cookie" ]      && options+=(--cookie "$cookie")
